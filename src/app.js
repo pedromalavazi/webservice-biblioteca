@@ -1,17 +1,19 @@
 'use strict'
 
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 const router = express.Router();
 
-const route = router.get('/', (req, res, next) => {
-    res.status(200).send({
-        title: "WebService",
-        version: "0.0.2"
-    });
-});
+//Carrega as rotas
+const indexRoute = require('./routes/index-route');
+const productRoute = require('./routes/product-route');
 
-app.use('/', route);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use('/', indexRoute);
+app.use('/products', productRoute);
 
 module.exports = app;
