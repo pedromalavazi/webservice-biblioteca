@@ -49,7 +49,7 @@ exports.getByTag = (req, res, next) => {
 exports.post = (req, res, next) => {
     var book = new Book(req.body);
     book.save()
-        .then(res => {
+        .then(x => {
             res.status(201).send({
                 message: 'Book registered.'
             });
@@ -62,11 +62,23 @@ exports.post = (req, res, next) => {
 };
 
 exports.put = (req, res, next) => {
-    const id = req.params.id;
-    res.status(200).send({
-        id: id, 
-        item: req.body
-    });
+    Book.findByIdAndUpdate(req.params.id, {
+        $set: {
+            title: req.body.title,
+            author: req.body.author,
+            gender: req.body.gender,
+            session: req.body.session,
+            tags: req.body.tags
+        }}).then(x => {
+            res.status(200).send({
+                message: 'Book updated.'
+            });
+        }).catch(e => {
+            res.status(400).send({
+                message: 'Failed to update the book.',
+                data: e
+            });
+        });
 };
 
 exports.delete = (req, res, next) => {
