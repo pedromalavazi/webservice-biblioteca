@@ -3,10 +3,53 @@
 const mongoose = require('mongoose');
 const Book = mongoose.model('Book');
 
+
+exports.getAll = (req, res, next) => {
+    Book.find({ active: true }, 'code title author session gender tags')
+    .then(data => {
+        res.status(200).send(data);
+    }).catch(e => {
+        res.status(400).send(e);
+    });
+}
+
+exports.getByCode = (req, res, next) => {
+    Book.findOne({ 
+        code: req.params.code,
+        active: true
+    }, 'code title author session gender tags')
+    .then(data => {
+        res.status(200).send(data);
+    }).catch(e => {
+        res.status(400).send(e);
+    });
+}
+
+exports.getById = (req, res, next) => {
+    Book.findById(req.params.id)
+    .then(data => {
+        res.status(200).send(data);
+    }).catch(e => {
+        res.status(400).send(e);
+    });
+}
+
+exports.getByTag = (req, res, next) => {
+    Book.find({ 
+        tags: req.params.tag,
+        active: true
+    }, 'code title author session gender tags')
+    .then(data => {
+        res.status(200).send(data);
+    }).catch(e => {
+        res.status(400).send(e);
+    });
+}
+
 exports.post = (req, res, next) => {
     var book = new Book(req.body);
     book.save()
-        .then(x => {
+        .then(res => {
             res.status(201).send({
                 message: 'Book registered.'
             });
