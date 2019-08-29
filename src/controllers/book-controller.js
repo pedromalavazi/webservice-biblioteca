@@ -3,48 +3,46 @@
 const mongoose = require('mongoose');
 const Book = mongoose.model('Book');
 const ValidationContract = require('../validators/validator');
-
+const repository = require('../repositories/book-repository')
 
 exports.getAll = (req, res, next) => {
-    Book.find({ active: true }, 'code title author session gender tags')
-    .then(data => {
-        res.status(200).send(data);
-    }).catch(e => {
-        res.status(400).send(e);
-    });
+    repository
+        .getAll()
+        .then(data => {
+            res.status(200).send(data);
+        }).catch(e => {
+            res.status(400).send(e);
+        });
 }
 
 exports.getByCode = (req, res, next) => {
-    Book.findOne({ 
-        code: req.params.code,
-        active: true
-    }, 'code title author session gender tags')
-    .then(data => {
-        res.status(200).send(data);
-    }).catch(e => {
-        res.status(400).send(e);
-    });
+    repository
+        .getByCode(req.params.code)
+        .then(data => {
+            res.status(200).send(data);
+        }).catch(e => {
+            res.status(400).send(e);
+        });
 }
 
 exports.getById = (req, res, next) => {
-    Book.findById(req.params.id)
-    .then(data => {
-        res.status(200).send(data);
-    }).catch(e => {
-        res.status(400).send(e);
-    });
+    repository
+        .getById(req.params.id)
+        .then(data => {
+            res.status(200).send(data);
+        }).catch(e => {
+            res.status(400).send(e);
+        });
 }
 
 exports.getByTag = (req, res, next) => {
-    Book.find({ 
-        tags: req.params.tag,
-        active: true
-    }, 'code title author session gender tags')
-    .then(data => {
-        res.status(200).send(data);
-    }).catch(e => {
-        res.status(400).send(e);
-    });
+    repository
+        .getByTag(req.params.tag)
+        .then(data => {
+            res.status(200).send(data);
+        }).catch(e => {
+            res.status(400).send(e);
+        });
 }
 
 exports.post = (req, res, next) => {
@@ -61,9 +59,8 @@ exports.post = (req, res, next) => {
         return;
     }
 
-
-    var book = new Book(req.body);
-    book.save()
+    repository
+        .create(req.body)
         .then(x => {
             res.status(201).send({
                 message: 'Book registered.'
@@ -77,14 +74,9 @@ exports.post = (req, res, next) => {
 };
 
 exports.put = (req, res, next) => {
-    Book.findByIdAndUpdate(req.params.id, {
-        $set: {
-            title: req.body.title,
-            author: req.body.author,
-            gender: req.body.gender,
-            session: req.body.session,
-            tags: req.body.tags
-        }}).then(x => {
+    repository
+        .update(req.params.id, req.body)
+        .then(x => {
             res.status(200).send({
                 message: 'Book updated.'
             });
@@ -97,8 +89,7 @@ exports.put = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    Book
-        .findByIdAndRemove(req.body.id)
+    repository.delete(req.body.id)
         .then(x => {
             res.status(200).send({
                 message: 'Book removed.'
