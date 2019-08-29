@@ -82,5 +82,16 @@ exports.put = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    res.status(200).send(req.body);
+    Book
+        .findByIdAndRemove(req.body.id)
+        .then(x => {
+            res.status(200).send({
+                message: 'Book removed.'
+            });
+        }).catch(e => {
+            res.status(400).send({
+                message: 'Failed to remove the book.',
+                data: e
+            });
+        });
 };
