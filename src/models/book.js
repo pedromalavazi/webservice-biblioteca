@@ -6,9 +6,8 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     code: {
         type: String,
-        required: true,
-        index: true,
-        unique: true
+        trim: true,
+        index: true
     },
     title: {
         type: String,

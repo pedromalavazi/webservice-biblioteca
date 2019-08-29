@@ -8,8 +8,9 @@ const app = express();
 const router = express.Router();
 
 //Conecta no banco
-mongoose.connect('mongodb+srv://pedro:pedro123@ndstr-cyplu.azure.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useFindAndModify: false } );
-
+mongoose.connect('mongodb+srv://pedro:pedro123@ndstr-cyplu.azure.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true} );
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 //Carrega os Models
 const Book = require('./models/book');
