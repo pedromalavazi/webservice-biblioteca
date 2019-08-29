@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const Book = mongoose.model('Book');
+const ValidationContract = require('../validators/validator');
 
 
 exports.getAll = (req, res, next) => {
@@ -47,6 +48,20 @@ exports.getByTag = (req, res, next) => {
 }
 
 exports.post = (req, res, next) => {
+    
+    //validação do request
+    let contract = new ValidationContract();
+    contract.hasMinLen(req.body.title, 3, 'Title must be at least 3 characters');
+    contract.hasMinLen(req.body.author, 5, 'Author must be at least 5 characters');
+    contract.hasMinLen(req.body.gender, 3, 'Gender must be at least 3 characters');
+    contract.hasMinLen(req.body.session, 1, 'Session must be at least 1 character');
+    
+    if(!contract.isValid()) {
+        res.status(400).send(contract.errors()).end();
+        return;
+    }
+
+
     var book = new Book(req.body);
     book.save()
         .then(x => {
