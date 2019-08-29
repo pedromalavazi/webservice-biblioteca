@@ -5,47 +5,52 @@ const Book = mongoose.model('Book');
 const ValidationContract = require('../validators/validator');
 const repository = require('../repositories/book-repository')
 
-exports.getAll = (req, res, next) => {
-    repository
-        .getAll()
-        .then(data => {
-            res.status(200).send(data);
-        }).catch(e => {
-            res.status(400).send(e);
+exports.getAll = async(req, res, next) => {
+    try {
+        var data = await repository.getAll();
+        res.status(200).send(data);
+    } catch(e) {
+        res.status(500).send({
+            message:'Failed to process your request.'
         });
+    }
+    
 }
 
-exports.getByCode = (req, res, next) => {
-    repository
-        .getByCode(req.params.code)
-        .then(data => {
-            res.status(200).send(data);
-        }).catch(e => {
-            res.status(400).send(e);
+exports.getByCode = async(req, res, next) => {
+    try {
+        var data = await repository.getByCode(req.params.code);
+        res.status(200).send(data);
+    } catch(e) {
+        res.status(500).send({
+            message:'Failed to process your request.'
         });
+    }
 }
 
-exports.getById = (req, res, next) => {
-    repository
-        .getById(req.params.id)
-        .then(data => {
-            res.status(200).send(data);
-        }).catch(e => {
-            res.status(400).send(e);
+exports.getById = async(req, res, next) => {
+    try {
+        var data = await repository.getById(req.params.id);
+        res.status(200).send(data);
+    } catch(e) {
+        res.status(500).send({
+            message:'Failed to process your request.'
         });
+    }
 }
 
-exports.getByTag = (req, res, next) => {
-    repository
-        .getByTag(req.params.tag)
-        .then(data => {
-            res.status(200).send(data);
-        }).catch(e => {
-            res.status(400).send(e);
+exports.getByTag = async(req, res, next) => {
+    try {
+        var data = await repository.getByTag(req.params.tag);
+        res.status(200).send(data);
+    } catch(e) {
+        res.status(500).send({
+            message:'Failed to process your request.'
         });
+    }
 }
 
-exports.post = (req, res, next) => {
+exports.post = async(req, res, next) => {
     
     //validação do request
     let contract = new ValidationContract();
@@ -59,45 +64,41 @@ exports.post = (req, res, next) => {
         return;
     }
 
-    repository
-        .create(req.body)
-        .then(x => {
-            res.status(201).send({
-                message: 'Book registered.'
-            });
-        }).catch(e => {
-            res.status(400).send({
-                message: 'Failed to register the book.',
-                data: e
-            });
+
+    try {
+        await repository.create(req.body);
+        res.status(201).send({
+            message: 'Book registered.'
         });
+    } catch(e) {
+        res.status(500).send({
+            message: 'Failed to register the book.'
+        });
+    }
 };
 
-exports.put = (req, res, next) => {
-    repository
-        .update(req.params.id, req.body)
-        .then(x => {
-            res.status(200).send({
-                message: 'Book updated.'
-            });
-        }).catch(e => {
-            res.status(400).send({
-                message: 'Failed to update the book.',
-                data: e
-            });
+exports.put = async(req, res, next) => {
+    try {
+        await repository.update(req.params.id, req.body);
+        res.status(200).send({
+            message: 'Book updated.'
         });
+    } catch(e) {
+        res.status(500).send({
+            message: 'Failed to update the book.'
+        });
+    }
 };
 
-exports.delete = (req, res, next) => {
-    repository.delete(req.body.id)
-        .then(x => {
-            res.status(200).send({
-                message: 'Book removed.'
-            });
-        }).catch(e => {
-            res.status(400).send({
-                message: 'Failed to remove the book.',
-                data: e
-            });
+exports.delete = async(req, res, next) => {
+    try {
+        await repository.delete(req.body.id);
+        res.status(200).send({
+            message: 'Book removed.'
         });
+    } catch(e) {
+        res.status(500).send({
+            message: 'Failed to remove the book.'
+        });
+    }
 };

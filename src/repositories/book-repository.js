@@ -3,47 +3,63 @@
 const mongoose = require('mongoose');
 const Book = mongoose.model('Book');
 
-exports.getAll = () => {
-    return Book
-        .find({ active: true },
-        'code title author session gender tags'); 
+exports.getAll = async() => {
+    const res = await Book.find(
+        { 
+            active: true 
+        }, 
+        'code title author session gender tags'
+    );    
+
+    return res;
 }
 
-exports.getByCode = (code) => {
-    return Book.findOne({ 
-        code: code,
-        active: true
-    }, 'code title author session gender tags');
+exports.getByCode = async(code) => {
+    const res = await Book.findOne(
+        { 
+            code: code,
+            active: true 
+        },
+        'code title author session gender tags'
+    );
+
+    return res;
 }
 
-exports.getById = (id) => {
-    return Book.findById(id);
+exports.getById = async(id) => {
+    const res = await Book.findById(id);
+    return res;
 }
 
-exports.getByTag = (tag) => {
-    return Book.find({ 
-        tags: tag,
-        active: true
-    }, 'code title author session gender tags');
+exports.getByTag = async(tag) => {
+    const res = await Book.find(
+        { 
+            tags: tag,
+            active: true
+        }, 
+        'code title author session gender tags'
+    );
+
+    return res;
 }
 
-exports.create = (data) => {
+exports.create = async(data) => {
     var book = new Book(data);
-    return book.save();
+    await book.save();
 }
 
-exports.update = (id, book) => {
-    return Book
-        .findByIdAndUpdate(id, {
+exports.update = async(id, book) => {
+    await Book
+        .findByIdAndUpdate(id, { 
             $set: {
                 title: book.title,
                 author: book.author,
                 gender: book.gender,
                 session: book.session,
                 tags: book.tags
-            }});    
+        }});
 }
 
-exports.delete = (id) => {
-    return Book.findByIdAndRemove(id);
+exports.delete = async(id) => {
+    await Book.findByIdAndRemove(id);
 }
