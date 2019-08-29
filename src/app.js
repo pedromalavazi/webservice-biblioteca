@@ -14,6 +14,8 @@ mongoose.set('useCreateIndex', true);
 
 //Carrega os Models
 const Book = require('./models/book');
+const Librarian = require('./models/librarian');
+const Student = require('./models/student');
 
 //Carrega as rotas
 const indexRoute = require('./routes/index-route');
