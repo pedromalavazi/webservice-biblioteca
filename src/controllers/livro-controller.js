@@ -15,6 +15,18 @@ exports.getAll = async(req, res, next) => {
     
 }
 
+exports.getAllKeyValue = async(req, res, next) => {
+    try {
+        var data = await repository.getAllKeyValue();
+        res.status(200).send(data);
+    } catch(e) {
+        res.status(500).send({
+            message:'Falha ao processar sua requisição.'
+        });
+    }
+    
+}
+
 exports.getByCodigo = async(req, res, next) => {
     try {
         var data = await repository.getByCodigo(req.params.codigo);

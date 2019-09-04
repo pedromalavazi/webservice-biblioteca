@@ -14,6 +14,17 @@ exports.getAll = async() => {
     return res;
 }
 
+exports.getAllKeyValue = async() => {
+    const res = await Livro.find(
+        { 
+            ativo: true 
+        }, 
+        'titulo'
+    );    
+
+    return res;
+}
+
 exports.getByCodigo = async(codigo) => {
     const res = await Livro.findOne(
         { 

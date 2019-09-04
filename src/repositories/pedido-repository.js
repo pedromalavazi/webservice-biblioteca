@@ -15,10 +15,10 @@ exports.create = async(data) => {
     await pedido.save();
 }
 
-exports.update = async(id, data) => {
+exports.update = async(id, dataDevolucao) => {
     await Pedido
         .findByIdAndUpdate(id, { 
             $set: {
-                dataFinal: data
+                dataFinal: dataDevolucao
         }});
 }
