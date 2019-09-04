@@ -19,7 +19,8 @@ const schema = new Schema({
     },
     dataFinal: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now
     },
     status: {
         type: String,

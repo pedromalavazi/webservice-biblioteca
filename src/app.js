@@ -21,6 +21,7 @@ const pedido = require('./models/pedido');
 const indexRoute = require('./routes/index-route');
 const livroRoute = require('./routes/livro-route');
 const alunoRoute = require('./routes/aluno-route');
+const pedidoRoute = require('./routes/pedido-route');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -28,5 +29,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/', indexRoute);
 app.use('/livro', livroRoute);
 app.use('/aluno', alunoRoute);
+app.use('/pedido', pedidoRoute);
 
 module.exports = app;

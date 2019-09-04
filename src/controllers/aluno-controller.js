@@ -1,7 +1,7 @@
 'use strict'
 
 const ValidationContract = require('../validators/validator');
-const repository = require('../repositories/aluno.repository');
+const repository = require('../repositories/aluno-repository');
 
 exports.post = async(req, res, next) => {
 
@@ -28,5 +28,3 @@ exports.post = async(req, res, next) => {
         });
     }
 };
-
-
