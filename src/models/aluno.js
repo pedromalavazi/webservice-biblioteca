@@ -3,20 +3,29 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const schema = new Schema({    
-    name: {
+const schema = new Schema({
+    ra: {
+        type: Number,
+        trim: true,
+        required: true,
+        index: true
+    },
+    nome: {
         type: String,
+        trim: false,
+        required: true
+    },
+    curso: {
+        type: String,
+        trim: false,
         required: true
     },
     email: {
         type: String,
+        trim: false,
         required: true
     },
-    password: {
-        type: String,
-        required: true
-    },
-    active: {
+    ativo: {
         type: Boolean,
         required: true,
         default: true
@@ -24,4 +33,4 @@ const schema = new Schema({
 });
 
 
-module.exports = mongoose.model('Librarian', schema);
+module.exports = mongoose.model('Aluno', schema);

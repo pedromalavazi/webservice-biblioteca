@@ -4,33 +4,38 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    ra: {
-        type: Number,
+    codigo: {
+        type: String,
         trim: true,
-        required: true,
         index: true
     },
-    name: {
+    titulo: {
         type: String,
-        trim: false,
+        required: true,
+        trim: true
+    },
+    autor: {
+        type: String,
         required: true
     },
-    course: {
+    genero: {
         type: String,
-        trim: false,
+        required: false
+    },
+    sessao: {
+        type: String,
         required: true
     },
-    email: {
-        type: String,
-        trim: false,
-        required: true
-    },
-    active: {
+    ativo: {
         type: Boolean,
         required: true,
         default: true
-    }
+    },
+    tags: [{
+        type: String,
+        required: true
+    }]
 });
 
 
-module.exports = mongoose.model('Student', schema);
+module.exports = mongoose.model('Livro', schema);

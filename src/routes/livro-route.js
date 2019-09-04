@@ -2,11 +2,11 @@
 
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/book-controller');
+const controller = require('../controllers/livro-controller');
 
 router.get('/', controller.getAll);
 
-router.get('/:code', controller.getByCode);
+router.get('/:codigo', controller.getByCode);
 
 router.get('/admin/:id', controller.getById);
 

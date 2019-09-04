@@ -1,9 +1,9 @@
 'use strict'
 
 const mongoose = require('mongoose');
-const Book = mongoose.model('Book');
+const Livro = mongoose.model('Livro');
 const ValidationContract = require('../validators/validator');
-const repository = require('../repositories/book-repository')
+const repository = require('../repositories/livro-repository')
 
 exports.getAll = async(req, res, next) => {
     try {
@@ -11,19 +11,19 @@ exports.getAll = async(req, res, next) => {
         res.status(200).send(data);
     } catch(e) {
         res.status(500).send({
-            message:'Failed to process your request.'
+            message:'Falha ao processar sua requisição.'
         });
     }
     
 }
 
-exports.getByCode = async(req, res, next) => {
+exports.getByCodigo = async(req, res, next) => {
     try {
-        var data = await repository.getByCode(req.params.code);
+        var data = await repository.getByCodigo(req.params.codigo);
         res.status(200).send(data);
     } catch(e) {
         res.status(500).send({
-            message:'Failed to process your request.'
+            message:'Falha ao processar sua requisição.'
         });
     }
 }
@@ -34,7 +34,7 @@ exports.getById = async(req, res, next) => {
         res.status(200).send(data);
     } catch(e) {
         res.status(500).send({
-            message:'Failed to process your request.'
+            message:'Falha ao processar sua requisição.'
         });
     }
 }
@@ -45,7 +45,7 @@ exports.getByTag = async(req, res, next) => {
         res.status(200).send(data);
     } catch(e) {
         res.status(500).send({
-            message:'Failed to process your request.'
+            message:'Falha ao processar sua requisição.'
         });
     }
 }
@@ -54,10 +54,10 @@ exports.post = async(req, res, next) => {
     
     //validação do request
     let contract = new ValidationContract();
-    contract.hasMinLen(req.body.title, 3, 'Title must be at least 3 characters');
-    contract.hasMinLen(req.body.author, 5, 'Author must be at least 5 characters');
-    contract.hasMinLen(req.body.gender, 3, 'Gender must be at least 3 characters');
-    contract.hasMinLen(req.body.session, 1, 'Session must be at least 1 character');
+    contract.hasMinLen(req.body.titulo, 3, 'Título deve ter pelo menos 3 caracteres');
+    contract.hasMinLen(req.body.autor, 5, 'Autor deve ter pelo menos 5 caracteres');
+    contract.hasMinLen(req.body.genero, 3, 'Gênero deve ter pelo menos 3 caracteres');
+    contract.hasMinLen(req.body.sessao, 1, 'Sessão deve ter pelo menos 1 caracteres');
     
     if(!contract.isValid()) {
         res.status(400).send(contract.errors()).end();
@@ -68,11 +68,11 @@ exports.post = async(req, res, next) => {
     try {
         await repository.create(req.body);
         res.status(201).send({
-            message: 'Book registered.'
+            message: 'Livro registrado com sucesso.'
         });
     } catch(e) {
         res.status(500).send({
-            message: 'Failed to register the book.'
+            message: 'Falha ao registrar o livro.'
         });
     }
 };
@@ -81,11 +81,11 @@ exports.put = async(req, res, next) => {
     try {
         await repository.update(req.params.id, req.body);
         res.status(200).send({
-            message: 'Book updated.'
+            message: 'Livro alterado com sucesso.'
         });
     } catch(e) {
         res.status(500).send({
-            message: 'Failed to update the book.'
+            message: 'Falha ao alterar o livro.'
         });
     }
 };
@@ -94,11 +94,11 @@ exports.delete = async(req, res, next) => {
     try {
         await repository.delete(req.body.id);
         res.status(200).send({
-            message: 'Book removed.'
+            message: 'Livro removido com sucesso.'
         });
     } catch(e) {
         res.status(500).send({
-            message: 'Failed to remove the book.'
+            message: 'Falha ao remover o livro.'
         });
     }
 };

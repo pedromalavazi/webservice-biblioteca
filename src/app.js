@@ -13,18 +13,17 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 //Carrega os Models
-const Book = require('./models/book');
-const Librarian = require('./models/librarian');
-const Student = require('./models/student');
+const livro = require('./models/livro');
+const aluno = require('./models/aluno');
 
 //Carrega as rotas
 const indexRoute = require('./routes/index-route');
-const bookRoute = require('./routes/book-route');
+const livroRoute = require('./routes/livro-route');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', indexRoute);
-app.use('/books', bookRoute);
+app.use('/livros', livroRoute);
 
 module.exports = app;
