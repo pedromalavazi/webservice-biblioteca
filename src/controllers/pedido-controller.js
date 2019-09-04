@@ -4,6 +4,9 @@ const ValidationContract = require('../validators/validator');
 const repository = require('../repositories/pedido-repository');
 const guid = require('guid');
 
+var moment = require('moment');
+moment.locale('pt-BR');
+
 exports.getAll = async(req, res, next) => {
     try {
         var data = await repository.getAll();
@@ -20,6 +23,8 @@ exports.post = async(req, res, next) => {
         await repository.create({
             aluno: req.body.aluno,
             numero: guid.raw().substring(0, 6),
+            dataInicio: moment(),
+            dataFinal: moment().add(7, 'd'),
             livros: req.body.livros
         });
         res.status(201).send({
