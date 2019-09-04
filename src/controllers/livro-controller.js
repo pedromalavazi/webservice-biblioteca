@@ -1,9 +1,7 @@
 'use strict'
 
-const mongoose = require('mongoose');
-const Livro = mongoose.model('Livro');
 const ValidationContract = require('../validators/validator');
-const repository = require('../repositories/livro-repository')
+const repository = require('../repositories/livro-repository');
 
 exports.getAll = async(req, res, next) => {
     try {
@@ -63,7 +61,6 @@ exports.post = async(req, res, next) => {
         res.status(400).send(contract.errors()).end();
         return;
     }
-
 
     try {
         await repository.create(req.body);

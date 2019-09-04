@@ -15,15 +15,18 @@ mongoose.set('useCreateIndex', true);
 //Carrega os Models
 const livro = require('./models/livro');
 const aluno = require('./models/aluno');
+const pedido = require('./models/pedido');
 
 //Carrega as rotas
 const indexRoute = require('./routes/index-route');
 const livroRoute = require('./routes/livro-route');
+const alunoRoute = require('./routes/aluno-route');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', indexRoute);
-app.use('/livros', livroRoute);
+app.use('/livro', livroRoute);
+app.use('/aluno', alunoRoute);
 
 module.exports = app;

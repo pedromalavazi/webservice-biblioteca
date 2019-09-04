@@ -6,7 +6,7 @@ const controller = require('../controllers/livro-controller');
 
 router.get('/', controller.getAll);
 
-router.get('/:codigo', controller.getByCode);
+router.get('/:codigo', controller.getByCodigo);
 
 router.get('/admin/:id', controller.getById);
 
