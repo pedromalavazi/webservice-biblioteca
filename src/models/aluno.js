@@ -4,37 +4,33 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    code: {
-        type: String,
-        required: true
-    },
-    title: {
-        type: String,
+    ra: {
+        type: Number,
+        trim: true,
         required: true,
-        trim: true
+        index: true
     },
-    author: {
+    nome: {
         type: String,
+        trim: false,
         required: true
     },
-    gender: {
+    curso: {
         type: String,
-        required: false
-    },
-    session: {
-        type: String,
+        trim: false,
         required: true
     },
-    active: {
+    email: {
+        type: String,
+        trim: false,
+        required: true
+    },
+    ativo: {
         type: Boolean,
         required: true,
         default: true
-    },
-    tags: [{
-        type: String,
-        required: true
-    }]
+    }
 });
 
 
-module.exports = mongoose.model('Book', schema);
+module.exports = mongoose.model('Aluno', schema);
