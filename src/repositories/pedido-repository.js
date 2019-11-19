@@ -2,23 +2,22 @@
 const mongoose = require('mongoose');
 const Pedido = mongoose.model('Pedido');
 
-exports.getAll = async(data) => {
+exports.getAll = async (data) => {
     var res = await Pedido
-        .find({}, 'numero status aluno livros dataInicio dataFinal')
-        .populate('aluno', 'nome')
-        .populate('livros.livro', 'titulo');
+        .find({}, 'dataFinal livro')
     return res;
 }
 
-exports.create = async(data) => {
+exports.create = async (data) => {
     var pedido = new Pedido(data);
     await pedido.save();
 }
 
-exports.update = async(id, dataDevolucao) => {
+exports.update = async (id, dataDevolucao) => {
     await Pedido
-        .findByIdAndUpdate(id, { 
+        .findByIdAndUpdate(id, {
             $set: {
                 dataFinal: dataDevolucao
-        }});
+            }
+        });
 }

@@ -8,7 +8,7 @@ exports.getAll = async() => {
         { 
             ativo: true 
         }, 
-        'codigo titulo autor sessao genero tags'
+        'codigo titulo autor sessao genero'
     );    
 
     return res;

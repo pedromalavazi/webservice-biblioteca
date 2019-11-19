@@ -18,23 +18,11 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    genero: {
-        type: String,
-        required: false
-    },
-    sessao: {
-        type: String,
-        required: true
-    },
     ativo: {
         type: Boolean,
         required: true,
         default: true
-    },
-    tags: [{
-        type: String,
-        required: true
-    }]
+    }
 });
 
 
