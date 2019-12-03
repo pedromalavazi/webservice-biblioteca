@@ -8,4 +8,7 @@ router.get('/', controller.getAll);
 
 router.post('/', controller.post);
 
+router.put('/', controller.put);
+
+
 module.exports = router;

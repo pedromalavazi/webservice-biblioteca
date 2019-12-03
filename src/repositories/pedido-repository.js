@@ -13,11 +13,12 @@ exports.create = async (data) => {
     await pedido.save();
 }
 
-exports.update = async (id, dataDevolucao) => {
+exports.update = async (id, dataDevolucao, livro) => {
     await Pedido
         .findByIdAndUpdate(id, {
             $set: {
-                dataFinal: dataDevolucao
+                dataFinal: dataDevolucao,
+                livro: livro
             }
         });
 }

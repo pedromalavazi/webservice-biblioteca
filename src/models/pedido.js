@@ -8,12 +8,6 @@ const schema = new Schema({
         type: Date,
         required: true
     },
-    status: {
-        type: String,
-        required: true,
-        enum: ['emprestado', 'devolvido'],
-        default: 'emprestado'
-    },
     livro: {
         type: String,
         required: true

@@ -31,11 +31,8 @@ exports.post = async(req, res, next) => {
 
     try {
         await repository.create({
-            aluno: req.body.aluno,
-            numero: guid.raw().substring(0, 6),
-            dataInicio: moment(),
-            dataFinal: moment(req.body.dataFinal, "DD/MM/YYYY"),
-            livros: req.body.livros
+            dataFinal: req.body.dataFinal,
+            livro: req.body.livro
         });
         res.status(201).send({
             message: 'Pedido cadastrado com sucesso!'
@@ -54,14 +51,12 @@ exports.put = async(req, res, next) => {
     contract.isRequired(req.body.dataFinal, 'Data de devolução deve ser informada.');
 
     if(!contract.isValid()) {
-        res.status(400).send(contract.errors()).end();
+        res.status(400).send(req.body).end();
         return;
     }
 
     try {
-        let dataFinal = moment(req.body.dataFinal, "DD/MM/YYYY");
-
-        await repository.update(req.params.id, dataFinal);
+        await repository.update(req.body.id, req.body.dataFinal, req.body.livro);
         res.status(200).send({
             message: 'Livro alterado com sucesso.'
         });
